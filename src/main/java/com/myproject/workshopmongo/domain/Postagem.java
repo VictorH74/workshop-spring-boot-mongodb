@@ -1,32 +1,40 @@
 package com.myproject.workshopmongo.domain;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.myproject.workshopmongo.dto.AutorDTO;
+
+@Document
 public class Postagem implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	@Id
 	private String id;
-	private Instant momento;
+	private Date momento;
 	private String titulo;
 	private String corpo;
 	
-	private Usuario autor;
+	private AutorDTO autor;
 	
 	private Set<Comentario> comentarios = new HashSet<>();
 	
 	public Postagem(){
 	}
 
-	public Postagem(String id, Instant momento, String titulo, String corpo) {
+	public Postagem(String id, Date momento, String titulo, String corpo, AutorDTO autor) {
 		super();
 		this.id = id;
 		this.momento = momento;
 		this.titulo = titulo;
 		this.corpo = corpo;
+		this.autor = autor;
 	}
 
 	public String getId() {
@@ -37,11 +45,11 @@ public class Postagem implements Serializable {
 		this.id = id;
 	}
 
-	public Instant getMomento() {
+	public Date getMomento() {
 		return momento;
 	}
 
-	public void setMomento(Instant momento) {
+	public void setMomento(Date momento) {
 		this.momento = momento;
 	}
 
@@ -59,6 +67,14 @@ public class Postagem implements Serializable {
 
 	public void setCorpo(String corpo) {
 		this.corpo = corpo;
+	}
+
+	public AutorDTO getAutor() {
+		return autor;
+	}
+
+	public void setAutor(AutorDTO autor) {
+		this.autor = autor;
 	}
 
 	@Override

@@ -1,15 +1,20 @@
 package com.myproject.workshopmongo.domain;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.util.Date;
 import java.util.Objects;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document
 public class Comentario implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	@Id
 	private String id;
 	private String texto;
-	private Instant momento;
+	private Date momento;
 	
 	private Postagem postagem;
 	
@@ -18,7 +23,7 @@ public class Comentario implements Serializable {
 	public Comentario() {
 	}
 
-	public Comentario(String id, String texto, Instant momento) {
+	public Comentario(String id, String texto, Date momento) {
 		super();
 		this.id = id;
 		this.texto = texto;
@@ -41,11 +46,11 @@ public class Comentario implements Serializable {
 		this.texto = texto;
 	}
 
-	public Instant getMomento() {
+	public Date getMomento() {
 		return momento;
 	}
 
-	public void setMomento(Instant momento) {
+	public void setMomento(Date momento) {
 		this.momento = momento;
 	}
 
