@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.myproject.workshopmongo.domain.Postagem;
 import com.myproject.workshopmongo.domain.Usuario;
 import com.myproject.workshopmongo.dto.UsuarioDTO;
 import com.myproject.workshopmongo.services.UsuarioService;
@@ -44,6 +45,12 @@ public class UsuarioResource {
 		Usuario obj = service.encontrarPorId(id);
 		
 		return ResponseEntity.ok().body(new UsuarioDTO(obj));
+	}
+	
+	@GetMapping(value = "/{id}/postagens")
+	public ResponseEntity<List<Postagem>> encontrarPostagensPorId(@PathVariable String id){
+		Usuario obj = service.encontrarPorId(id);
+		return ResponseEntity.ok().body(obj.getPostagens());
 	}
 	
 	@PostMapping
