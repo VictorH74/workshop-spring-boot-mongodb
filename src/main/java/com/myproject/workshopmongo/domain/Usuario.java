@@ -1,11 +1,12 @@
 package com.myproject.workshopmongo.domain;
 
 import java.io.Serializable;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 //@Document(collection="") para definir um nome da coleção manualmente
@@ -18,7 +19,9 @@ public class Usuario implements Serializable {
 	private String nome;
 	private String email;
 	
-	private Set<Postagem> postagens = new HashSet<>();
+	@DBRef(lazy = true)//-> INDICAR QUE UM ATRIBUTO ESTA REFERENCIANDO OUTRA COLEÇAO DO MONGODB
+	private List<Postagem> postagens = new ArrayList<>(); // REFERENCIAS PARA AS POSTAGENS DO USUARIO ATRAVÉS DE Postagem.id EM LISTA
+	//(lazy = true)-> GARANTIR QUE AS POSTAGENS SO VAO SER CARREGADOS APENAS FOREM CONSULTADOS NA COLEÇAO
 	
 	public Usuario() {
 	}
@@ -52,6 +55,14 @@ public class Usuario implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public List<Postagem> getPostagens() {
+		return postagens;
+	}
+	
+	public void setPostagens(List<Postagem> postagens) {
+		this.postagens = postagens;
 	}
 
 	@Override

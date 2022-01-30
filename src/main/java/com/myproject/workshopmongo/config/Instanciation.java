@@ -37,12 +37,16 @@ public class Instanciation implements CommandLineRunner {
 		Usuario u3 = new Usuario(null, "Samuel Jackson", "sam.jackson89@gmail.com");
 		Usuario u4 = new Usuario(null, "Nicolas Tesla", "mr.tesla_elbrabo@gmail.com");
 		
+		uRepository.saveAll(Arrays.asList(u1, u2, u3, u4));
+		
 		Postagem post1 = new Postagem(null, stf.parse("21/08/2021"), "Partiu viagem", "Vou viajar para SP. Abraços!", new AutorDTO(u1));
 		Postagem post2 = new Postagem(null, stf.parse("27/10/2021"), "Bom dia", "Acorder feliz hoje!", new AutorDTO(u2));
 		
-		uRepository.saveAll(Arrays.asList(u1, u2, u3, u4));
 		pRepository.saveAll(Arrays.asList(post1, post2));
 		
+		u1.getPostagens().addAll(Arrays.asList(post1, post2));
+		
+		uRepository.save(u1);
 	}
 
 }
