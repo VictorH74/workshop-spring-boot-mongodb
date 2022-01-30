@@ -2,7 +2,6 @@ package com.myproject.workshopmongo.resources;
 
 import java.net.URI;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,8 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.myproject.workshopmongo.domain.Postagem;
@@ -29,15 +28,20 @@ public class UsuarioResource {
 	@Autowired
 	private UsuarioService service;
 	
-	//@GetMapping -> Mesma função da annotation abaixo
-	@RequestMapping(method = RequestMethod.GET) //-> Indicar que esse metodo sera o EndPoint do caminho "/usuarios"
-	public ResponseEntity<List<UsuarioDTO>> listarTodos(){
-		
-		List<UsuarioDTO> list = service.listarTodos().stream().map(x -> new UsuarioDTO(x))
-				.collect(Collectors.toList());
-
-		return ResponseEntity.ok().body(list);
+	@GetMapping
+	public ModelAndView index(){
+		return new ModelAndView("usuarios");
 	}
+	
+	//@GetMapping -> Mesma função da annotation abaixo
+//	@RequestMapping(method = RequestMethod.GET) //-> Indicar que esse metodo sera o EndPoint do caminho "/usuarios"
+//	public ResponseEntity<List<UsuarioDTO>> listarTodos(){
+//		
+//		List<UsuarioDTO> list = service.listarTodos().stream().map(x -> new UsuarioDTO(x))
+//				.collect(Collectors.toList());
+//
+//		return ResponseEntity.ok().body(list);
+//	}
 	
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<UsuarioDTO> encontrarPorId(@PathVariable String id){
